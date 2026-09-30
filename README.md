@@ -5,7 +5,14 @@ operations.  Its production modules model queue-time protection, dispatch,
 reticle reservations, recipe qualification, SPC, metrology sampling,
 maintenance, chamber matching, holds, genealogy, chemical aging, cleanroom
 excursions, demand control, rework, lot merging, equipment dedication,
-contamination, takt, route yield and shipment commitments.
+contamination, takt, route yield and shipment commitments.  The
+`fabweave.certification` package schedules recipe-on-chamber qualification runs
+atomically: a batch is placed only if every run clears planned maintenance and
+its pre-maintenance cool-down buffer, honors chamber cool-down gaps, is covered
+by an on-call engineer within one shift and capacity, and finishes while the
+certification is still valid at the need time.  When a batch cannot be placed,
+nothing is reserved and every detected conflict (structural conflicts, pairwise
+resource contention, exhaustive-search evidence) is returned.
 
 The cross-domain workflow layer composes these services for material
 readiness, dispatch-after-hold, qualified reservations and assignments,
